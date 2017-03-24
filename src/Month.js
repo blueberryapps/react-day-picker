@@ -1,9 +1,10 @@
+import Radium from 'radium';
 import React, { PropTypes } from 'react';
 import DayPickerPropTypes from './PropTypes';
 import Weekdays from './Weekdays';
 import { getWeekArray } from './Helpers';
 
-export default function Month({
+const Month = ({
   classNames,
 
   month,
@@ -21,7 +22,7 @@ export default function Month({
 
   onCaptionClick,
   children,
-}) {
+}) => {
   const captionProps = {
     date: month,
     classNames,
@@ -36,7 +37,7 @@ export default function Month({
 
   const weeks = getWeekArray(month, firstDayOfWeek, fixedWeeks);
   return (
-    <div className={ classNames.month } role="grid">
+    <div style={ classNames.month } role="grid">
       {caption}
       <Weekdays
         classNames={ classNames }
@@ -47,10 +48,10 @@ export default function Month({
         localeUtils={ localeUtils }
         weekdayElement={ weekdayElement }
       />
-      <div className={ classNames.body } role="rowgroup">
+      <div style={ classNames.body } role="rowgroup">
         {
           weeks.map((week, j) =>
-            <div key={ j } className={ classNames.week } role="gridcell">
+            <div key={ j } style={ classNames.week } role="gridcell">
               {week.map(day => children(day, month))}
             </div>,
         )}
@@ -59,11 +60,13 @@ export default function Month({
   );
 }
 
+export default Radium(Month);
+
 Month.propTypes = {
   classNames: PropTypes.shape({
-    month: PropTypes.string.isRequired,
-    body: PropTypes.string.isRequired,
-    week: PropTypes.string.isRequired,
+    month: PropTypes.object.isRequired,
+    body: PropTypes.object.isRequired,
+    week: PropTypes.object.isRequired,
   }).isRequired,
 
   month: PropTypes.instanceOf(Date).isRequired,

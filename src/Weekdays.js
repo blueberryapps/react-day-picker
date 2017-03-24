@@ -1,7 +1,8 @@
+import Radium from 'radium';
 import React, { PropTypes } from 'react';
 import DayPickerPropTypes from './PropTypes';
 
-export default function Weekdays({
+const Weekdays = ({
   classNames,
   firstDayOfWeek,
   weekdaysLong,
@@ -9,7 +10,7 @@ export default function Weekdays({
   locale,
   localeUtils,
   weekdayElement,
-}) {
+}) => {
   const days = [];
   for (let i = 0; i < 7; i += 1) {
     const weekday = (i + firstDayOfWeek) % 7;
@@ -29,20 +30,22 @@ export default function Weekdays({
   }
 
   return (
-    <div className={ classNames.weekdays } role="rowgroup">
-      <div className={ classNames.weekdaysRow } role="row">
+    <div style={ classNames.weekdays } role="rowgroup">
+      <div style={ classNames.weekdaysRow } role="row">
         { days }
       </div>
     </div>
   );
 }
 
+export default Radium(Weekdays);
+
 Weekdays.propTypes = {
 
   classNames: PropTypes.shape({
-    weekday: PropTypes.string.isRequired,
-    weekdays: PropTypes.string.isRequired,
-    weekdaysRow: PropTypes.string.isRequired,
+    weekday: PropTypes.object.isRequired,
+    weekdays: PropTypes.object.isRequired,
+    weekdaysRow: PropTypes.object.isRequired,
   }).isRequired,
 
   firstDayOfWeek: PropTypes.number.isRequired,

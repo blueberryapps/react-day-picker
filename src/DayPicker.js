@@ -1,3 +1,4 @@
+import Radium from 'radium';
 import React, { Component, PropTypes } from 'react';
 import Caption from './Caption';
 import Navbar from './Navbar';
@@ -13,7 +14,7 @@ import classNames from './classNames';
 import keys from './keys';
 import DayPickerPropTypes, { ModifierPropType } from './PropTypes';
 
-export default class DayPicker extends Component {
+class DayPicker extends Component {
   static VERSION = '5.2.0';
 
   static propTypes = {
@@ -58,19 +59,18 @@ export default class DayPicker extends Component {
 
     // CSS and HTML
     classNames: PropTypes.shape({
-      body: PropTypes.string,
-      container: PropTypes.string,
-      day: PropTypes.string.isRequired,
-      disabled: PropTypes.string.isRequired,
-      interactionDisabled: PropTypes.string,
-      month: PropTypes.string,
-      navBar: PropTypes.string,
-      outside: PropTypes.string.isRequired,
-      selected: PropTypes.string.isRequired,
-      today: PropTypes.string.isRequired,
-      week: PropTypes.string,
+      body: PropTypes.object,
+      container: PropTypes.object,
+      day: PropTypes.object.isRequired,
+      disabled: PropTypes.object.isRequired,
+      interactionDisabled: PropTypes.object,
+      month: PropTypes.object,
+      navBar: PropTypes.object,
+      outside: PropTypes.object.isRequired,
+      selected: PropTypes.object.isRequired,
+      today: PropTypes.object.isRequired,
+      week: PropTypes.object,
     }),
-    className: PropTypes.string,
     containerProps: PropTypes.object,
     tabIndex: PropTypes.number,
 
@@ -455,8 +455,11 @@ export default class DayPicker extends Component {
       }
     }
     const key = `${day.getFullYear()}${day.getMonth()}${day.getDate()}`;
-    const modifiers = {};
-    dayModifiers.forEach((modifier) => { modifiers[modifier] = true; });
+
+    const modifiers = dayModifiers.reverse().reduce((acc, modifier) => {
+      const resolvedStyle = typeof modifier === 'string' ? this.props.classNames[modifier] : modifier;
+      return [...acc, resolvedStyle]
+    }, []);
 
     return (
       <Day
@@ -465,6 +468,7 @@ export default class DayPicker extends Component {
         day={ day }
         modifiers={ modifiers }
         empty={ isOutside && !this.props.enableOutsideDays && !this.props.fixedWeeks }
+        interactionDisabled={ !this.props.onDayClick }
 
         tabIndex={ tabIndex }
 
@@ -523,19 +527,11 @@ export default class DayPicker extends Component {
   }
 
   render() {
-    let className = this.props.classNames.container;
-
-    if (!this.props.onDayClick) {
-      className = `${className} ${this.props.classNames.interactionDisabled}`;
-    }
-    if (this.props.className) {
-      className = `${className} ${this.props.className}`;
-    }
 
     return (
       <div
         { ...this.props.containerProps }
-        className={ className }
+        style={ this.props.classNames.container }
         ref={ (el) => { this.dayPicker = el; } }
         role="application"
         lang={ this.props.locale }
@@ -550,3 +546,5 @@ export default class DayPicker extends Component {
     );
   }
 }
+
+export default Radium(DayPicker);

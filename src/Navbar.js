@@ -1,8 +1,9 @@
+import Radium from 'radium';
 import React, { PropTypes } from 'react';
 
 import defaultClassNames from './classNames';
 
-export default function Navbar({
+const Navbar = ({
   classNames,
   className,
   showPreviousButton,
@@ -11,7 +12,7 @@ export default function Navbar({
   onNextClick,
   labels,
   dir,
-}) {
+}) => {
   const previousClickHandler = dir === 'rtl' ? onNextClick : onPreviousClick;
   const nextClickHandler = dir === 'rtl' ? onPreviousClick : onNextClick;
 
@@ -20,7 +21,7 @@ export default function Navbar({
       role="button"
       aria-label={ labels.previousMonth }
       key="previous"
-      className={ classNames.navButtonPrev }
+      style={ classNames.navButtonPrev }
       onClick={ () => previousClickHandler() }
     />;
 
@@ -29,24 +30,26 @@ export default function Navbar({
       role="button"
       aria-label={ labels.nextMonth }
       key="right"
-      className={ classNames.navButtonNext }
+      style={ classNames.navButtonNext }
       onClick={ () => nextClickHandler() }
     />;
 
   return (
-    <div className={ className || classNames.navBar }>
+    <div style={ className || classNames.navBar }>
       {dir === 'rtl' ? [nextButton, previousButton] : [previousButton, nextButton]}
     </div>
   );
 }
 
+export default Radium(Navbar);
+
 export const NavbarPropTypes = {
   classNames: PropTypes.shape({
-    navBar: PropTypes.string.isRequired,
-    navButtonPrev: PropTypes.string.isRequired,
-    navButtonNext: PropTypes.string.isRequired,
+    navBar: PropTypes.object.isRequired,
+    navButtonPrev: PropTypes.object.isRequired,
+    navButtonNext: PropTypes.object.isRequired,
   }),
-  className: PropTypes.string,
+  className: PropTypes.object,
   showPreviousButton: PropTypes.bool,
   showNextButton: PropTypes.bool,
   onPreviousClick: PropTypes.func,

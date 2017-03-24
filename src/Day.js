@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions, react/forbid-prop-types */
 
+import Radium from 'radium';
 import React, { PropTypes } from 'react';
 import defaultClassNames from './classNames';
 
@@ -12,8 +13,9 @@ function handleEvent(handler, day, modifiers) {
     handler(day, modifiers, e);
   };
 }
-export default function Day({
+const Day = ({
   classNames,
+  interactionDisabled,
   day,
   tabIndex,
   empty,
@@ -29,20 +31,16 @@ export default function Day({
   ariaDisabled,
   ariaSelected,
   children,
-}) {
-  let className = classNames.day;
-  if (classNames !== defaultClassNames) {
-    // When using CSS modules prefix the modifier as required by the BEM syntax
-    className += ` ${Object.keys(modifiers).join(' ')}`;
-  } else {
-    className += Object.keys(modifiers).map(modifier => ` ${className}--${modifier}`).join('');
-  }
+}) => {
+  const className = [classNames.day, ...modifiers, interactionDisabled && classNames.interactionDisabled];
+
   if (empty) {
-    return <div role="gridcell" aria-disabled className={ className } />;
+    return <div role="gridcell" aria-disabled style={ className } />;
   }
+
   return (
     <div
-      className={ className }
+      style={ className }
       tabIndex={ tabIndex }
       role="gridcell"
       aria-label={ ariaLabel }
@@ -61,10 +59,12 @@ export default function Day({
   );
 }
 
+export default Radium(Day);
+
 Day.propTypes = {
 
   classNames: PropTypes.shape({
-    day: PropTypes.string.isRequired,
+    day: PropTypes.object.isRequired,
   }).isRequired,
 
   day: PropTypes.instanceOf(Date).isRequired,
@@ -83,6 +83,7 @@ Day.propTypes = {
   onTouchStart: PropTypes.func,
   onFocus: PropTypes.func,
   tabIndex: PropTypes.number,
+  interactionDisabled: PropTypes.bool,
 };
 
 Day.defaultProps = {

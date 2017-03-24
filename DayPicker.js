@@ -7,6 +7,7 @@ var LocaleUtils = require('./lib/src/LocaleUtils');
 var Weekday = require('./lib/src/Weekday');
 var Navbar = require('./lib/src/Navbar');
 var PropTypes = require('./lib/src/PropTypes');
+var DefaultStyles = require('./lib/src/classNames');
 
 module.exports = DayPicker.default || DayPicker;
 module.exports.DateUtils = DateUtils.default || DateUtils;
@@ -14,3 +15,4 @@ module.exports.LocaleUtils = LocaleUtils.default || LocaleUtils;
 module.exports.WeekdayPropTypes = Weekday.WeekdayPropTypes;
 module.exports.NavbarPropTypes = Navbar.NavbarPropTypes;
 module.exports.PropTypes = PropTypes;
+module.exports.DefaultStyles = DefaultStyles.default;

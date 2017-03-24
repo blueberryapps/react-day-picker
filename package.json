@@ -23,7 +23,7 @@
     "check": "npm run lint && npm run test",
     "prerelease": "npm run check && npm run build && cp src/style.css lib",
     "build": "npm run build:node && npm run build:production && npm run build:development",
-    "build:node": "babel ./src -d ./lib/src --source-maps && postcss --use autoprefixer src/style.css -d lib/",
+    "build:node": "rm -rf lib && babel ./src -d ./lib/src --source-maps",
     "build:development": "NODE_ENV=development webpack",
     "build:production": "NODE_ENV=production webpack -p",
     "examples:clean": "rimraf examples/built",
@@ -92,5 +92,8 @@
     "sinon": "^1.17.7",
     "sinon-chai": "2.8.0",
     "webpack": "^2.2.1"
+  },
+  "dependencies": {
+    "radium": "^0.18.2"
   }
 }

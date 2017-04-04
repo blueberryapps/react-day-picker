@@ -50,9 +50,9 @@ export default class AdvancedModifiers extends React.Component {
         <span>
           <DayPicker
             modifiers={ modifiers }
-            styles={customStyles}
             onDayMouseEnter={ this.handleDayMouseEnter }
             onDayClick={ this.handleDayClick }
+            styles={customStyles}
           />
         </span>
         <p>

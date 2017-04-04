@@ -39,18 +39,18 @@ const Day = ({
     interactionDisabled && defaultStyles.interactionDisabled
   ];
 
-  const resolvedClassName = `DayPicker--day ${modifiers.includes('outside') ? 'DayPicker--day__outside' : ''}`;
+  const className = `DayPicker--day ${modifiers.includes('outside') ? 'DayPicker--day__outside' : ''}`;
 
   if (empty) {
-    return <div role="gridcell" aria-disabled style={ style } className={ resolvedClassName } />;
+    return <div role="gridcell" aria-disabled className={ className } style={ style } />;
   }
 
   return (
     <div
+      className={ className }
       style={ style }
       tabIndex={ tabIndex }
       role="gridcell"
-      className={ resolvedClassName }
       aria-label={ ariaLabel }
       aria-disabled={ ariaDisabled.toString() }
       aria-selected={ ariaSelected.toString() }

@@ -29,7 +29,7 @@ declare namespace DayPicker {
 
     export interface CaptionElementProps {
         date: Date;
-        classNames: ClassNames,
+        styles: Styles,
         localeUtils: LocaleUtils;
         locale: string;
         months: undefined;
@@ -37,8 +37,8 @@ declare namespace DayPicker {
     }
 
     export interface NavbarElementProps {
-        className: {};
-        classNames: ClassNames;
+        style: {};
+        styles: Styles;
         previousMonth: Date;
         nextMonth: Date;
         showPreviousButton: boolean;
@@ -53,31 +53,31 @@ declare namespace DayPicker {
 
     export interface WeekdayElementProps {
         weekday: number;
-        className: {};
+        style: {};
         localeUtils: LocaleUtils;
         locale: string;
     }
 
-    export interface ClassNames {
-        container: {};
-        interactionDisabled: {};
-        navBar: {};
-        navButtonPrev: {};
-        navButtonNext: {};
+    export interface Styles {
+        container?: {};
+        interactionDisabled?: {};
+        navBar?: {};
+        navButtonPrev?: {};
+        navButtonNext?: {};
 
-        month: {};
-        caption: {};
-        weekdays: {};
-        weekdaysRow: {};
-        weekday: {};
-        body: {};
-        week: {};
-        day: {};
+        month?: {};
+        caption?: {};
+        weekdays?: {};
+        weekdaysRow?: {};
+        weekday?: {};
+        body?: {};
+        week?: {};
+        day?: {};
 
-        today: {};
-        selected: {};
-        disabled: {};
-        outside: {};
+        today?: {};
+        selected?: {};
+        disabled?: {};
+        outside?: {};
     }
 
     export interface RangeModifier {
@@ -106,8 +106,7 @@ declare namespace DayPicker {
         captionElement?: React.ReactElement<Partial<CaptionElementProps>> |
             React.ComponentClass<CaptionElementProps> |
             React.SFC<CaptionElementProps>;
-        className?: string;
-        classNames?: ClassNames;
+        styles?: Styles;
         containerProps?: React.HTMLAttributes<HTMLDivElement>;
         disabledDays?: Modifier | Modifier[];
         enableOutsideDays?: boolean;

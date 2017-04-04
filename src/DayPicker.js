@@ -9,7 +9,6 @@ import Weekday from './Weekday';
 import * as Helpers from './Helpers';
 import * as DateUtils from './DateUtils';
 import * as LocaleUtils from './LocaleUtils';
-import classNames from './classNames';
 import defaultStyles from './defaultStyles';
 
 import keys from './keys';
@@ -58,8 +57,8 @@ class DayPicker extends Component {
     enableOutsideDays: PropTypes.bool,
     fixedWeeks: PropTypes.bool,
 
-    // CSS and HTML
-    classNames: PropTypes.shape({
+    // Styles and HTML
+    styles: PropTypes.shape({
       body: PropTypes.object,
       container: PropTypes.object,
       day: PropTypes.object,
@@ -110,7 +109,7 @@ class DayPicker extends Component {
   };
 
   static defaultProps = {
-    classNames,
+    styles: {},
     tabIndex: 0,
     initialMonth: new Date(),
     numberOfMonths: 1,
@@ -127,8 +126,8 @@ class DayPicker extends Component {
     pagedNavigation: false,
     renderDay: day => day.getDate(),
     weekdayElement: <Weekday />,
-    navbarElement: <Navbar classNames={ classNames } />,
-    captionElement: <Caption classNames={ classNames } />,
+    navbarElement: <Navbar />,
+    captionElement: <Caption />,
   };
 
   constructor(props) {
@@ -409,8 +408,8 @@ class DayPicker extends Component {
     if (!canChangeMonth) return null;
 
     const props = {
-      classNames: this.props.classNames,
-      className: this.props.classNames.navBar,
+      styles: this.props.styles,
+      style: defaultStyles.navBar,
       nextMonth: this.getNextNavigableMonth(),
       previousMonth: this.getPreviousNavigableMonth(),
       showPreviousButton: this.allowPreviousMonth(),
@@ -452,7 +451,7 @@ class DayPicker extends Component {
     return (
       <Day
         key={ `${isOutside ? 'outside-' : ''}${key}` }
-        classNames={ this.props.classNames }
+        styles={ this.props.styles }
         day={ day }
         modifiers={ modifiers }
         empty={ isOutside && !this.props.enableOutsideDays && !this.props.fixedWeeks }
@@ -487,7 +486,7 @@ class DayPicker extends Component {
       months.push(
         <Month
           key={ i }
-          classNames={ this.props.classNames }
+          styles={ this.props.styles }
 
           month={ month }
           months={ this.props.months }
@@ -519,7 +518,7 @@ class DayPicker extends Component {
     return (
       <div
         { ...this.props.containerProps }
-        style={[defaultStyles.container, this.props.classNames.container]}
+        style={[defaultStyles.container, this.props.styles.container]}
         ref={ (el) => { this.dayPicker = el; } }
         role="application"
         lang={ this.props.locale }

@@ -5,7 +5,7 @@ import defaultStyles from './defaultStyles';
 
 const Weekday = ({
   weekday,
-  className,
+  style,
   weekdaysLong,
   weekdaysShort,
   localeUtils,
@@ -25,7 +25,7 @@ const Weekday = ({
   }
 
   return (
-    <div style={[defaultStyles.weekday, className]} role="columnheader">
+    <div style={[defaultStyles.weekday, style]} role="columnheader">
       <abbr title={ title }>
         {content}
       </abbr>
@@ -37,7 +37,7 @@ export default Radium(Weekday);
 
 export const WeekdayPropTypes = {
   weekday: PropTypes.number,
-  className: PropTypes.object,
+  style: PropTypes.object,
   locale: PropTypes.string,
   localeUtils: DayPickerPropTypes.localeUtils,
 

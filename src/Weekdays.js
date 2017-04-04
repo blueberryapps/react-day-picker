@@ -4,7 +4,7 @@ import DayPickerPropTypes from './PropTypes';
 import defaultStyles from './defaultStyles';
 
 const Weekdays = ({
-  classNames,
+  styles,
   firstDayOfWeek,
   weekdaysLong,
   weekdaysShort,
@@ -17,7 +17,7 @@ const Weekdays = ({
     const weekday = (i + firstDayOfWeek) % 7;
     const elementProps = {
       key: i,
-      className: classNames.weekday,
+      style: styles.weekday,
       weekday,
       weekdaysLong,
       weekdaysShort,
@@ -31,8 +31,8 @@ const Weekdays = ({
   }
 
   return (
-    <div style={[defaultStyles.weekdays, classNames.weekdays]} role="rowgroup">
-      <div style={[defaultStyles.weekdaysRow, classNames.weekdaysRow]} role="row">
+    <div style={[defaultStyles.weekdays, styles.weekdays]} role="rowgroup">
+      <div style={[defaultStyles.weekdaysRow, styles.weekdaysRow]} role="row">
         { days }
       </div>
     </div>
@@ -43,7 +43,7 @@ export default Radium(Weekdays);
 
 Weekdays.propTypes = {
 
-  classNames: PropTypes.shape({
+  styles: PropTypes.shape({
     weekday: PropTypes.object,
     weekdays: PropTypes.object,
     weekdaysRow: PropTypes.object,

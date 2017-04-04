@@ -3,9 +3,9 @@ import React, { PropTypes } from 'react';
 import DayPickerPropTypes from './PropTypes';
 import defaultStyles from './defaultStyles';
 
-const Caption = ({ classNames, date, months, locale, localeUtils, onClick }) => {
+const Caption = ({ styles, date, months, locale, localeUtils, onClick }) => {
   return (
-    <div style={[defaultStyles.caption, classNames.caption]} onClick={ onClick } role="heading">
+    <div style={[defaultStyles.caption, styles.caption]} onClick={ onClick } role="heading">
       { months ?
         `${months[date.getMonth()]} ${date.getFullYear()}` :
         localeUtils.formatMonthTitle(date, locale)
@@ -22,7 +22,7 @@ Caption.propTypes = {
   locale: PropTypes.string,
   localeUtils: DayPickerPropTypes.localeUtils,
   onClick: PropTypes.func,
-  classNames: PropTypes.shape({
+  styles: PropTypes.shape({
     caption: PropTypes.object,
   }),
 };

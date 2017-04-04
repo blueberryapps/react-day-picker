@@ -14,7 +14,7 @@ function handleEvent(handler, day, modifiers) {
   };
 }
 const Day = ({
-  classNames,
+  styles,
   interactionDisabled,
   day,
   tabIndex,
@@ -32,25 +32,25 @@ const Day = ({
   ariaSelected,
   children,
 }) => {
-  const className = [
+  const style = [
     defaultStyles.day,
-    classNames.day,
-    modifiers.map((modifier) => [defaultStyles[modifier], classNames[modifier]]),
+    styles.day,
+    modifiers.map((modifier) => [defaultStyles[modifier], styles[modifier]]),
     interactionDisabled && defaultStyles.interactionDisabled
   ];
 
-  const resolvedClassNames= `DayPicker--day ${modifiers.includes('outside') ? 'DayPicker--day__outside' : ''}`;
+  const resolvedClassName = `DayPicker--day ${modifiers.includes('outside') ? 'DayPicker--day__outside' : ''}`;
 
   if (empty) {
-    return <div role="gridcell" aria-disabled style={ className } className={resolvedClassNames} />;
+    return <div role="gridcell" aria-disabled style={ style } className={ resolvedClassName } />;
   }
 
   return (
     <div
-      style={ className }
+      style={ style }
       tabIndex={ tabIndex }
       role="gridcell"
-      className={resolvedClassNames}
+      className={ resolvedClassName }
       aria-label={ ariaLabel }
       aria-disabled={ ariaDisabled.toString() }
       aria-selected={ ariaSelected.toString() }
@@ -71,7 +71,7 @@ export default Radium(Day);
 
 Day.propTypes = {
 
-  classNames: PropTypes.shape({
+  styles: PropTypes.shape({
     day: PropTypes.object,
   }),
 

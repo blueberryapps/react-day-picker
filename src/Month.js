@@ -6,7 +6,7 @@ import defaultStyles from './defaultStyles';
 import { getWeekArray } from './Helpers';
 
 const Month = ({
-  classNames,
+  styles,
 
   month,
   months,
@@ -26,7 +26,7 @@ const Month = ({
 }) => {
   const captionProps = {
     date: month,
-    classNames,
+    styles,
     months,
     localeUtils,
     locale,
@@ -38,10 +38,10 @@ const Month = ({
 
   const weeks = getWeekArray(month, firstDayOfWeek, fixedWeeks);
   return (
-    <div style={[defaultStyles.month, classNames.month]} role="grid">
+    <div style={[defaultStyles.month, styles.month]} role="grid">
       {caption}
       <Weekdays
-        classNames={ classNames }
+        styles={ styles }
         weekdaysShort={ weekdaysShort }
         weekdaysLong={ weekdaysLong }
         firstDayOfWeek={ firstDayOfWeek }
@@ -49,10 +49,10 @@ const Month = ({
         localeUtils={ localeUtils }
         weekdayElement={ weekdayElement }
       />
-      <div style={[defaultStyles.body, classNames.body]} role="rowgroup">
+      <div style={[defaultStyles.body, styles.body]} role="rowgroup">
         {
           weeks.map((week, j) =>
-            <div key={ j } style={[defaultStyles.week, classNames.week]} role="gridcell">
+            <div key={ j } style={[defaultStyles.week, styles.week]} role="gridcell">
               {week.map(day => children(day, month))}
             </div>,
         )}
@@ -64,7 +64,7 @@ const Month = ({
 export default Radium(Month);
 
 Month.propTypes = {
-  classNames: PropTypes.shape({
+  styles: PropTypes.shape({
     month: PropTypes.object,
     body: PropTypes.object,
     week: PropTypes.object,

@@ -2,7 +2,7 @@
 
 import Radium from 'radium';
 import React, { PropTypes } from 'react';
-import defaultClassNames from './classNames';
+import defaultStyles from './defaultStyles';
 
 function handleEvent(handler, day, modifiers) {
   if (!handler) {
@@ -32,7 +32,7 @@ const Day = ({
   ariaSelected,
   children,
 }) => {
-  const className = [classNames.day, ...modifiers, interactionDisabled && classNames.interactionDisabled];
+  const className = [defaultStyles.day, classNames.day, ...modifiers, interactionDisabled && defaultStyles.interactionDisabled];
 
   if (empty) {
     return <div role="gridcell" aria-disabled style={ className } />;

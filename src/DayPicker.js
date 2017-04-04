@@ -10,6 +10,7 @@ import * as Helpers from './Helpers';
 import * as DateUtils from './DateUtils';
 import * as LocaleUtils from './LocaleUtils';
 import classNames from './classNames';
+import defaultStyles from './defaultStyles';
 
 import keys from './keys';
 import DayPickerPropTypes, { ModifierPropType } from './PropTypes';
@@ -531,7 +532,7 @@ class DayPicker extends Component {
     return (
       <div
         { ...this.props.containerProps }
-        style={ this.props.classNames.container }
+        style={[defaultStyles.container, this.props.classNames.container]}
         ref={ (el) => { this.dayPicker = el; } }
         role="application"
         lang={ this.props.locale }

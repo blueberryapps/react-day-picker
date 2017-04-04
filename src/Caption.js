@@ -1,10 +1,11 @@
 import Radium from 'radium';
 import React, { PropTypes } from 'react';
 import DayPickerPropTypes from './PropTypes';
+import defaultStyles from './defaultStyles';
 
 const Caption = ({ classNames, date, months, locale, localeUtils, onClick }) => {
   return (
-    <div style={ classNames.caption } onClick={ onClick } role="heading">
+    <div style={[defaultStyles.caption, classNames.caption]} onClick={ onClick } role="heading">
       { months ?
         `${months[date.getMonth()]} ${date.getFullYear()}` :
         localeUtils.formatMonthTitle(date, locale)

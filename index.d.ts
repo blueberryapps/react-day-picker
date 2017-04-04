@@ -150,7 +150,6 @@ declare namespace DayPicker {
     const VERSION: string;
     const LocaleUtils: DayPicker.LocaleUtils;
     const DateUtils: DayPicker.DateUtils;
-    const DefaultStyles: DayPicker.ClassNames;
 }
 
 declare class DayPicker extends React.Component<DayPicker.Props, never> {

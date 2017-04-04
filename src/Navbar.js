@@ -2,6 +2,7 @@ import Radium from 'radium';
 import React, { PropTypes } from 'react';
 
 import defaultClassNames from './classNames';
+import defaultStyles from './defaultStyles';
 
 const Navbar = ({
   classNames,
@@ -21,7 +22,7 @@ const Navbar = ({
       role="button"
       aria-label={ labels.previousMonth }
       key="previous"
-      style={ classNames.navButtonPrev }
+      style={[defaultStyles.navButtonPrev, classNames.navButtonPrev]}
       onClick={ () => previousClickHandler() }
     />;
 
@@ -30,12 +31,12 @@ const Navbar = ({
       role="button"
       aria-label={ labels.nextMonth }
       key="right"
-      style={ classNames.navButtonNext }
+      style={[defaultStyles.navButtonNext, classNames.navButtonNext]}
       onClick={ () => nextClickHandler() }
     />;
 
   return (
-    <div style={ className || classNames.navBar }>
+    <div style={[defaultStyles.navbar, classNames.navBar, className]}>
       {dir === 'rtl' ? [nextButton, previousButton] : [previousButton, nextButton]}
     </div>
   );

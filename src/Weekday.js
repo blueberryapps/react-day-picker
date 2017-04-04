@@ -1,6 +1,7 @@
 import Radium from 'radium';
 import React, { PropTypes } from 'react';
 import DayPickerPropTypes from './PropTypes';
+import defaultStyles from './defaultStyles';
 
 const Weekday = ({
   weekday,
@@ -24,7 +25,7 @@ const Weekday = ({
   }
 
   return (
-    <div style={ className } role="columnheader">
+    <div style={[defaultStyles.weekday, className]} role="columnheader">
       <abbr title={ title }>
         {content}
       </abbr>

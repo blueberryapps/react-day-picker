@@ -1,6 +1,7 @@
 import Radium from 'radium';
 import React, { PropTypes } from 'react';
 import DayPickerPropTypes from './PropTypes';
+import defaultStyles from './defaultStyles';
 
 const Weekdays = ({
   classNames,
@@ -30,8 +31,8 @@ const Weekdays = ({
   }
 
   return (
-    <div style={ classNames.weekdays } role="rowgroup">
-      <div style={ classNames.weekdaysRow } role="row">
+    <div style={[defaultStyles.weekdays, classNames.weekdays]} role="rowgroup">
+      <div style={[defaultStyles.weekdaysRow, classNames.weekdaysRow]} role="row">
         { days }
       </div>
     </div>

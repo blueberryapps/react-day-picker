@@ -2,6 +2,7 @@ import Radium from 'radium';
 import React, { PropTypes } from 'react';
 import DayPickerPropTypes from './PropTypes';
 import Weekdays from './Weekdays';
+import defaultStyles from './defaultStyles';
 import { getWeekArray } from './Helpers';
 
 const Month = ({
@@ -37,7 +38,7 @@ const Month = ({
 
   const weeks = getWeekArray(month, firstDayOfWeek, fixedWeeks);
   return (
-    <div style={ classNames.month } role="grid">
+    <div style={[defaultStyles.month, classNames.month]} role="grid">
       {caption}
       <Weekdays
         classNames={ classNames }
@@ -48,10 +49,10 @@ const Month = ({
         localeUtils={ localeUtils }
         weekdayElement={ weekdayElement }
       />
-      <div style={ classNames.body } role="rowgroup">
+      <div style={[defaultStyles.body, classNames.body]} role="rowgroup">
         {
           weeks.map((week, j) =>
-            <div key={ j } style={ classNames.week } role="gridcell">
+            <div key={ j } style={[defaultStyles.week, classNames.week]} role="gridcell">
               {week.map(day => children(day, month))}
             </div>,
         )}

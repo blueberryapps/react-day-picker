@@ -65,10 +65,10 @@ export default Radium(Month);
 
 Month.propTypes = {
   classNames: PropTypes.shape({
-    month: PropTypes.object.isRequired,
-    body: PropTypes.object.isRequired,
-    week: PropTypes.object.isRequired,
-  }).isRequired,
+    month: PropTypes.object,
+    body: PropTypes.object,
+    week: PropTypes.object,
+  }),
 
   month: PropTypes.instanceOf(Date).isRequired,
   months: React.PropTypes.arrayOf(React.PropTypes.string),

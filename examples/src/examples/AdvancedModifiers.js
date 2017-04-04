@@ -1,16 +1,16 @@
 import React from 'react';
 import DayPicker from '../../../src';
 
-import '../../../src/style.css';
-import '../styles/odd-even.css';
-
-const styleObject = {
+const customStyles = {
   odd: {
     backgroundColor: 'red',
   },
   even: {
     backgroundColor: 'green',
-  }
+  },
+  first: {
+    backgroundColor: 'black',
+  },
 }
 
 export default class AdvancedModifiers extends React.Component {
@@ -50,7 +50,7 @@ export default class AdvancedModifiers extends React.Component {
         <span>
           <DayPicker
             modifiers={ modifiers }
-            classNames={styleObject}
+            classNames={customStyles}
             onDayMouseEnter={ this.handleDayMouseEnter }
             onDayClick={ this.handleDayClick }
           />

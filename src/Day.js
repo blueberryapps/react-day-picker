@@ -32,10 +32,17 @@ const Day = ({
   ariaSelected,
   children,
 }) => {
-  const className = [defaultStyles.day, classNames.day, ...modifiers, interactionDisabled && defaultStyles.interactionDisabled];
+  const className = [
+    defaultStyles.day,
+    classNames.day,
+    modifiers.map((modifier) => [defaultStyles[modifier], classNames[modifier]]),
+    interactionDisabled && defaultStyles.interactionDisabled
+  ];
+
+  const resolvedClassNames= `DayPicker--day ${modifiers.includes('outside') ? 'DayPicker--day__outside' : ''}`;
 
   if (empty) {
-    return <div role="gridcell" aria-disabled style={ className } />;
+    return <div role="gridcell" aria-disabled style={ className } className={resolvedClassNames} />;
   }
 
   return (
@@ -43,6 +50,7 @@ const Day = ({
       style={ className }
       tabIndex={ tabIndex }
       role="gridcell"
+      className={resolvedClassNames}
       aria-label={ ariaLabel }
       aria-disabled={ ariaDisabled.toString() }
       aria-selected={ ariaSelected.toString() }
@@ -64,8 +72,8 @@ export default Radium(Day);
 Day.propTypes = {
 
   classNames: PropTypes.shape({
-    day: PropTypes.object.isRequired,
-  }).isRequired,
+    day: PropTypes.object,
+  }),
 
   day: PropTypes.instanceOf(Date).isRequired,
   children: PropTypes.node.isRequired,

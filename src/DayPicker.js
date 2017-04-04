@@ -62,14 +62,14 @@ class DayPicker extends Component {
     classNames: PropTypes.shape({
       body: PropTypes.object,
       container: PropTypes.object,
-      day: PropTypes.object.isRequired,
-      disabled: PropTypes.object.isRequired,
+      day: PropTypes.object,
+      disabled: PropTypes.object,
       interactionDisabled: PropTypes.object,
       month: PropTypes.object,
       navBar: PropTypes.object,
-      outside: PropTypes.object.isRequired,
-      selected: PropTypes.object.isRequired,
-      today: PropTypes.object.isRequired,
+      outside: PropTypes.object,
+      selected: PropTypes.object,
+      today: PropTypes.object,
       week: PropTypes.object,
     }),
     containerProps: PropTypes.object,
@@ -168,16 +168,7 @@ class DayPicker extends Component {
   }
 
   getDayNodes() {
-    let outsideClassName;
-    if (this.props.classNames === classNames) {
-      // When using CSS modules prefix the modifier as required by the BEM syntax
-      outsideClassName = `${this.props.classNames.day}--${this.props.classNames.outside}`;
-    } else {
-      outsideClassName = `${this.props.classNames.outside}`;
-    }
-    const dayQuery = this.props.classNames.day.replace(/ /g, '.');
-    const outsideDayQuery = outsideClassName.replace(/ /g, '.');
-    const selector = `.${dayQuery}:not(.${outsideDayQuery})`;
+    const selector = '.DayPicker--day:not(.DayPicker--day__outside)';
     return this.dayPicker.querySelectorAll(selector);
   }
 
@@ -439,11 +430,11 @@ class DayPicker extends Component {
     const propModifiers = Helpers.getModifiersFromProps(this.props);
     const dayModifiers = Helpers.getModifiersForDay(day, propModifiers);
     if (DateUtils.isSameDay(day, new Date()) &&
-        !Object.prototype.hasOwnProperty.call(propModifiers, this.props.classNames.today)) {
-      dayModifiers.push(this.props.classNames.today);
+        !Object.prototype.hasOwnProperty.call(propModifiers, 'today')) {
+      dayModifiers.push('today');
     }
     if (day.getMonth() !== month.getMonth()) {
-      dayModifiers.push(this.props.classNames.outside);
+      dayModifiers.push('outside');
     }
 
     const isOutside = day.getMonth() !== month.getMonth();
@@ -456,11 +447,7 @@ class DayPicker extends Component {
       }
     }
     const key = `${day.getFullYear()}${day.getMonth()}${day.getDate()}`;
-
-    const modifiers = dayModifiers.reverse().reduce((acc, modifier) => {
-      const resolvedStyle = typeof modifier === 'string' ? this.props.classNames[modifier] : modifier;
-      return [...acc, resolvedStyle]
-    }, []);
+    const modifiers = dayModifiers.map((modifier) => modifier);
 
     return (
       <Day

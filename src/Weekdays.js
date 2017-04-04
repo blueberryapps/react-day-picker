@@ -44,10 +44,10 @@ export default Radium(Weekdays);
 Weekdays.propTypes = {
 
   classNames: PropTypes.shape({
-    weekday: PropTypes.object.isRequired,
-    weekdays: PropTypes.object.isRequired,
-    weekdaysRow: PropTypes.object.isRequired,
-  }).isRequired,
+    weekday: PropTypes.object,
+    weekdays: PropTypes.object,
+    weekdaysRow: PropTypes.object,
+  }),
 
   firstDayOfWeek: PropTypes.number.isRequired,
   weekdaysLong: PropTypes.arrayOf(PropTypes.string),

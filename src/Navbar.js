@@ -46,9 +46,9 @@ export default Radium(Navbar);
 
 export const NavbarPropTypes = {
   classNames: PropTypes.shape({
-    navBar: PropTypes.object.isRequired,
-    navButtonPrev: PropTypes.object.isRequired,
-    navButtonNext: PropTypes.object.isRequired,
+    navBar: PropTypes.object,
+    navButtonPrev: PropTypes.object,
+    navButtonNext: PropTypes.object,
   }),
   className: PropTypes.object,
   showPreviousButton: PropTypes.bool,

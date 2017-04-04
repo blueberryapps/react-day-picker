@@ -23,6 +23,6 @@ Caption.propTypes = {
   localeUtils: DayPickerPropTypes.localeUtils,
   onClick: PropTypes.func,
   classNames: PropTypes.shape({
-    caption: PropTypes.object.isRequired,
-  }).isRequired,
+    caption: PropTypes.object,
+  }),
 };

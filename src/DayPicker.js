@@ -1,3 +1,4 @@
+import Radium from 'radium';
 import React, { Component, PropTypes } from 'react';
 import Caption from './Caption';
 import Navbar from './Navbar';
@@ -8,12 +9,12 @@ import Weekday from './Weekday';
 import * as Helpers from './Helpers';
 import * as DateUtils from './DateUtils';
 import * as LocaleUtils from './LocaleUtils';
-import classNames from './classNames';
+import defaultStyles from './defaultStyles';
 
 import keys from './keys';
 import DayPickerPropTypes, { ModifierPropType } from './PropTypes';
 
-export default class DayPicker extends Component {
+class DayPicker extends Component {
   static VERSION = '5.2.0';
 
   static propTypes = {
@@ -56,21 +57,20 @@ export default class DayPicker extends Component {
     enableOutsideDays: PropTypes.bool,
     fixedWeeks: PropTypes.bool,
 
-    // CSS and HTML
-    classNames: PropTypes.shape({
-      body: PropTypes.string,
-      container: PropTypes.string,
-      day: PropTypes.string.isRequired,
-      disabled: PropTypes.string.isRequired,
-      interactionDisabled: PropTypes.string,
-      month: PropTypes.string,
-      navBar: PropTypes.string,
-      outside: PropTypes.string.isRequired,
-      selected: PropTypes.string.isRequired,
-      today: PropTypes.string.isRequired,
-      week: PropTypes.string,
+    // Styles and HTML
+    styles: PropTypes.shape({
+      body: PropTypes.object,
+      container: PropTypes.object,
+      day: PropTypes.object,
+      disabled: PropTypes.object,
+      interactionDisabled: PropTypes.object,
+      month: PropTypes.object,
+      navBar: PropTypes.object,
+      outside: PropTypes.object,
+      selected: PropTypes.object,
+      today: PropTypes.object,
+      week: PropTypes.object,
     }),
-    className: PropTypes.string,
     containerProps: PropTypes.object,
     tabIndex: PropTypes.number,
 
@@ -109,7 +109,7 @@ export default class DayPicker extends Component {
   };
 
   static defaultProps = {
-    classNames,
+    styles: {},
     tabIndex: 0,
     initialMonth: new Date(),
     numberOfMonths: 1,
@@ -126,8 +126,8 @@ export default class DayPicker extends Component {
     pagedNavigation: false,
     renderDay: day => day.getDate(),
     weekdayElement: <Weekday />,
-    navbarElement: <Navbar classNames={ classNames } />,
-    captionElement: <Caption classNames={ classNames } />,
+    navbarElement: <Navbar />,
+    captionElement: <Caption />,
   };
 
   constructor(props) {
@@ -167,16 +167,7 @@ export default class DayPicker extends Component {
   }
 
   getDayNodes() {
-    let outsideClassName;
-    if (this.props.classNames === classNames) {
-      // When using CSS modules prefix the modifier as required by the BEM syntax
-      outsideClassName = `${this.props.classNames.day}--${this.props.classNames.outside}`;
-    } else {
-      outsideClassName = `${this.props.classNames.outside}`;
-    }
-    const dayQuery = this.props.classNames.day.replace(/ /g, '.');
-    const outsideDayQuery = outsideClassName.replace(/ /g, '.');
-    const selector = `.${dayQuery}:not(.${outsideDayQuery})`;
+    const selector = '.DayPicker--day:not(.DayPicker--day__outside)';
     return this.dayPicker.querySelectorAll(selector);
   }
 
@@ -417,8 +408,8 @@ export default class DayPicker extends Component {
     if (!canChangeMonth) return null;
 
     const props = {
-      classNames: this.props.classNames,
-      className: this.props.classNames.navBar,
+      styles: this.props.styles,
+      style: defaultStyles.navBar,
       nextMonth: this.getNextNavigableMonth(),
       previousMonth: this.getPreviousNavigableMonth(),
       showPreviousButton: this.allowPreviousMonth(),
@@ -438,11 +429,11 @@ export default class DayPicker extends Component {
     const propModifiers = Helpers.getModifiersFromProps(this.props);
     const dayModifiers = Helpers.getModifiersForDay(day, propModifiers);
     if (DateUtils.isSameDay(day, new Date()) &&
-        !Object.prototype.hasOwnProperty.call(propModifiers, this.props.classNames.today)) {
-      dayModifiers.push(this.props.classNames.today);
+        !Object.prototype.hasOwnProperty.call(propModifiers, 'today')) {
+      dayModifiers.push('today');
     }
     if (day.getMonth() !== month.getMonth()) {
-      dayModifiers.push(this.props.classNames.outside);
+      dayModifiers.push('outside');
     }
 
     const isOutside = day.getMonth() !== month.getMonth();
@@ -455,16 +446,16 @@ export default class DayPicker extends Component {
       }
     }
     const key = `${day.getFullYear()}${day.getMonth()}${day.getDate()}`;
-    const modifiers = {};
-    dayModifiers.forEach((modifier) => { modifiers[modifier] = true; });
+    const modifiers = dayModifiers.map((modifier) => modifier);
 
     return (
       <Day
         key={ `${isOutside ? 'outside-' : ''}${key}` }
-        classNames={ this.props.classNames }
+        styles={ this.props.styles }
         day={ day }
         modifiers={ modifiers }
         empty={ isOutside && !this.props.enableOutsideDays && !this.props.fixedWeeks }
+        interactionDisabled={ !this.props.onDayClick }
 
         tabIndex={ tabIndex }
 
@@ -495,7 +486,7 @@ export default class DayPicker extends Component {
       months.push(
         <Month
           key={ i }
-          classNames={ this.props.classNames }
+          styles={ this.props.styles }
 
           month={ month }
           months={ this.props.months }
@@ -523,19 +514,11 @@ export default class DayPicker extends Component {
   }
 
   render() {
-    let className = this.props.classNames.container;
-
-    if (!this.props.onDayClick) {
-      className = `${className} ${this.props.classNames.interactionDisabled}`;
-    }
-    if (this.props.className) {
-      className = `${className} ${this.props.className}`;
-    }
 
     return (
       <div
         { ...this.props.containerProps }
-        className={ className }
+        style={[defaultStyles.container, this.props.styles.container]}
         ref={ (el) => { this.dayPicker = el; } }
         role="application"
         lang={ this.props.locale }
@@ -550,3 +533,5 @@ export default class DayPicker extends Component {
     );
   }
 }
+
+export default Radium(DayPicker);

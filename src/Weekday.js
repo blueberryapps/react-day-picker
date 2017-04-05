@@ -1,14 +1,16 @@
+import Radium from 'radium';
 import React, { PropTypes } from 'react';
 import DayPickerPropTypes from './PropTypes';
+import defaultStyles from './defaultStyles';
 
-export default function Weekday({
+const Weekday = ({
   weekday,
-  className,
+  style,
   weekdaysLong,
   weekdaysShort,
   localeUtils,
   locale,
-}) {
+}) => {
   let title;
   if (weekdaysLong) {
     title = weekdaysLong[weekday];
@@ -23,7 +25,7 @@ export default function Weekday({
   }
 
   return (
-    <div className={ className } role="columnheader">
+    <div style={[defaultStyles.weekday, style]} role="columnheader">
       <abbr title={ title }>
         {content}
       </abbr>
@@ -31,9 +33,11 @@ export default function Weekday({
   );
 }
 
+export default Radium(Weekday);
+
 export const WeekdayPropTypes = {
   weekday: PropTypes.number,
-  className: PropTypes.string,
+  style: PropTypes.object,
   locale: PropTypes.string,
   localeUtils: DayPickerPropTypes.localeUtils,
 

@@ -23,10 +23,10 @@ export function getDaysInMonth(d) {
 export function getModifiersFromProps(props) {
   const modifiers = { ...props.modifiers };
   if (props.selectedDays) {
-    modifiers[props.classNames.selected] = props.selectedDays;
+    modifiers['selected'] = props.selectedDays;
   }
   if (props.disabledDays) {
-    modifiers[props.classNames.disabled] = props.disabledDays;
+    modifiers['disabled'] = props.disabledDays;
   }
   return modifiers;
 }

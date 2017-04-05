@@ -1,17 +1,18 @@
+import Radium from 'radium';
 import React, { PropTypes } from 'react';
 
-import defaultClassNames from './classNames';
+import defaultStyles from './defaultStyles';
 
-export default function Navbar({
-  classNames,
-  className,
+const Navbar = ({
+  styles,
+  style,
   showPreviousButton,
   showNextButton,
   onPreviousClick,
   onNextClick,
   labels,
   dir,
-}) {
+}) => {
   const previousClickHandler = dir === 'rtl' ? onNextClick : onPreviousClick;
   const nextClickHandler = dir === 'rtl' ? onPreviousClick : onNextClick;
 
@@ -20,7 +21,7 @@ export default function Navbar({
       role="button"
       aria-label={ labels.previousMonth }
       key="previous"
-      className={ classNames.navButtonPrev }
+      style={[defaultStyles.navButtonPrev, styles.navButtonPrev]}
       onClick={ () => previousClickHandler() }
     />;
 
@@ -29,24 +30,26 @@ export default function Navbar({
       role="button"
       aria-label={ labels.nextMonth }
       key="right"
-      className={ classNames.navButtonNext }
+      style={[defaultStyles.navButtonNext, styles.navButtonNext]}
       onClick={ () => nextClickHandler() }
     />;
 
   return (
-    <div className={ className || classNames.navBar }>
+    <div style={[defaultStyles.navbar, styles.navBar, style]}>
       {dir === 'rtl' ? [nextButton, previousButton] : [previousButton, nextButton]}
     </div>
   );
 }
 
+export default Radium(Navbar);
+
 export const NavbarPropTypes = {
-  classNames: PropTypes.shape({
-    navBar: PropTypes.string.isRequired,
-    navButtonPrev: PropTypes.string.isRequired,
-    navButtonNext: PropTypes.string.isRequired,
+  styles: PropTypes.shape({
+    navBar: PropTypes.object,
+    navButtonPrev: PropTypes.object,
+    navButtonNext: PropTypes.object,
   }),
-  className: PropTypes.string,
+  style: PropTypes.object,
   showPreviousButton: PropTypes.bool,
   showNextButton: PropTypes.bool,
   onPreviousClick: PropTypes.func,
@@ -61,7 +64,6 @@ export const NavbarPropTypes = {
 Navbar.propTypes = NavbarPropTypes;
 
 Navbar.defaultProps = {
-  classNames: defaultClassNames,
   dir: 'ltr',
   labels: {
     previousMonth: 'Previous Month',

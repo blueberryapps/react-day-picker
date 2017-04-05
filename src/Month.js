@@ -1,10 +1,12 @@
+import Radium from 'radium';
 import React, { PropTypes } from 'react';
 import DayPickerPropTypes from './PropTypes';
 import Weekdays from './Weekdays';
+import defaultStyles from './defaultStyles';
 import { getWeekArray } from './Helpers';
 
-export default function Month({
-  classNames,
+const Month = ({
+  styles,
 
   month,
   months,
@@ -21,10 +23,10 @@ export default function Month({
 
   onCaptionClick,
   children,
-}) {
+}) => {
   const captionProps = {
     date: month,
-    classNames,
+    styles,
     months,
     localeUtils,
     locale,
@@ -36,10 +38,10 @@ export default function Month({
 
   const weeks = getWeekArray(month, firstDayOfWeek, fixedWeeks);
   return (
-    <div className={ classNames.month } role="grid">
+    <div style={[defaultStyles.month, styles.month]} role="grid">
       {caption}
       <Weekdays
-        classNames={ classNames }
+        styles={ styles }
         weekdaysShort={ weekdaysShort }
         weekdaysLong={ weekdaysLong }
         firstDayOfWeek={ firstDayOfWeek }
@@ -47,10 +49,10 @@ export default function Month({
         localeUtils={ localeUtils }
         weekdayElement={ weekdayElement }
       />
-      <div className={ classNames.body } role="rowgroup">
+      <div style={[defaultStyles.body, styles.body]} role="rowgroup">
         {
           weeks.map((week, j) =>
-            <div key={ j } className={ classNames.week } role="gridcell">
+            <div key={ j } style={[defaultStyles.week, styles.week]} role="gridcell">
               {week.map(day => children(day, month))}
             </div>,
         )}
@@ -59,12 +61,14 @@ export default function Month({
   );
 }
 
+export default Radium(Month);
+
 Month.propTypes = {
-  classNames: PropTypes.shape({
-    month: PropTypes.string.isRequired,
-    body: PropTypes.string.isRequired,
-    week: PropTypes.string.isRequired,
-  }).isRequired,
+  styles: PropTypes.shape({
+    month: PropTypes.object,
+    body: PropTypes.object,
+    week: PropTypes.object,
+  }),
 
   month: PropTypes.instanceOf(Date).isRequired,
   months: React.PropTypes.arrayOf(React.PropTypes.string),

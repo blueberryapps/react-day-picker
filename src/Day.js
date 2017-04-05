@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions, react/forbid-prop-types */
 
+import Radium from 'radium';
 import React, { PropTypes } from 'react';
-import defaultClassNames from './classNames';
+import defaultStyles from './defaultStyles';
 
 function handleEvent(handler, day, modifiers) {
   if (!handler) {
@@ -12,8 +13,9 @@ function handleEvent(handler, day, modifiers) {
     handler(day, modifiers, e);
   };
 }
-export default function Day({
-  classNames,
+const Day = ({
+  styles,
+  interactionDisabled,
   day,
   tabIndex,
   empty,
@@ -29,20 +31,24 @@ export default function Day({
   ariaDisabled,
   ariaSelected,
   children,
-}) {
-  let className = classNames.day;
-  if (classNames !== defaultClassNames) {
-    // When using CSS modules prefix the modifier as required by the BEM syntax
-    className += ` ${Object.keys(modifiers).join(' ')}`;
-  } else {
-    className += Object.keys(modifiers).map(modifier => ` ${className}--${modifier}`).join('');
-  }
+}) => {
+  const style = [
+    defaultStyles.day,
+    styles.day,
+    modifiers.map((modifier) => [defaultStyles[modifier], styles[modifier]]),
+    interactionDisabled && defaultStyles.interactionDisabled
+  ];
+
+  const className = `DayPicker--day ${modifiers.includes('outside') ? 'DayPicker--day__outside' : ''}`;
+
   if (empty) {
-    return <div role="gridcell" aria-disabled className={ className } />;
+    return <div role="gridcell" aria-disabled className={ className } style={ style } />;
   }
+
   return (
     <div
       className={ className }
+      style={ style }
       tabIndex={ tabIndex }
       role="gridcell"
       aria-label={ ariaLabel }
@@ -61,11 +67,13 @@ export default function Day({
   );
 }
 
+export default Radium(Day);
+
 Day.propTypes = {
 
-  classNames: PropTypes.shape({
-    day: PropTypes.string.isRequired,
-  }).isRequired,
+  styles: PropTypes.shape({
+    day: PropTypes.object,
+  }),
 
   day: PropTypes.instanceOf(Date).isRequired,
   children: PropTypes.node.isRequired,
@@ -83,6 +91,7 @@ Day.propTypes = {
   onTouchStart: PropTypes.func,
   onFocus: PropTypes.func,
   tabIndex: PropTypes.number,
+  interactionDisabled: PropTypes.bool,
 };
 
 Day.defaultProps = {

@@ -1,14 +1,14 @@
 {
-  "name": "react-day-picker",
-  "version": "5.2.0",
-  "description": "Flexible date picker component for React",
+  "name": "react-day-picker-radium",
+  "version": "0.0.2",
+  "description": "Flexible date picker component for React with Radium",
   "main": "DayPicker.js",
-  "style": "lib/style.css",
   "files": [
     "DayPicker.js",
     "lib",
     "moment.js",
-    "utils.js"
+    "utils.js",
+    "index.d.ts"
   ],
   "directories": {
     "doc": "docs"
@@ -36,7 +36,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gpbl/react-day-picker.git"
+    "url": "https://github.com/blueberryapps/react-day-picker-radium.git"
   },
   "keywords": [
     "react",
@@ -48,12 +48,13 @@
     "date",
     "picker",
     "moment",
-    "momentjs"
+    "momentjs",
+    "radium"
   ],
   "author": "Giampaolo Bellavite <io@gpbl.org>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gpbl/react-day-picker/issues"
+    "url": "https://github.com/blueberryapps/react-day-picker-radium/issues"
   },
   "homepage": "https://react-day-picker.js.org",
   "peerDependencies": {

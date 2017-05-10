@@ -1,6 +1,6 @@
 {
   "name": "react-day-picker-radium",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Flexible date picker component for React with Radium",
   "main": "DayPicker.js",
   "files": [
